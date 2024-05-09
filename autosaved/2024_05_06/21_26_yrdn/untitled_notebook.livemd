@@ -1,0 +1,32 @@
+# Untitled notebook
+
+```elixir
+Mix.install([
+  {:nx, "~> 0.6", override: true},
+  {:explorer, "~> 0.8.2"},
+  {:exla, "~> 0.6"},
+  {:axon, "~> 0.6"},
+  {:deque, "~> 1.2"},
+  {:vega_lite, "~> 0.1"},
+  {:req, "~> 0.4"},
+  {:kino, "~> 0.12.3"},
+  {:kino_vega_lite, "~> 0.1"},
+  {:kino_explorer, "~> 0.1"}
+])
+
+# This sets the default compiler and also tells it to use my GPU.
+Nx.default_backend({EXLA.Backend, client: :cuda})
+```
+
+## Section
+
+```elixir
+# Change the URL if you'd like to experiment with other books
+download_url = "https://www.gutenberg.org/files/11/11-0.txt"
+
+book_text = Req.get!(download_url).body
+```
+
+```elixir
+
+```
