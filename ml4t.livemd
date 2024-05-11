@@ -304,80 +304,6 @@ end
 ```
 
 ```elixir
-portfolio =
-  "JPM"
-  |> StockData.get("2024-05-01", "2024-05-10")
-  |> StockData.computed_adjusted()
-  |> StockData.action_pricing()
-  |> PortfolioManager.new()
-  |> PortfolioManager.transact(0, 1_000.0, :cash)
-  |> PortfolioManager.transact(0, -1, :shares)
-  |> PortfolioManager.transact(2, 1, :shares)
-  |> PortfolioManager.transact(3, -1, :shares)
-  |> PortfolioManager.transact(4, 1, :shares)
-
-# value = DF.pull(portfolio, "value") |> S.slice(1..-1)
-# previous_value = portfolio |> DF.pull("value") |> S.shift(1) |> S.slice(1..-1)
-# daily_returns = value |> S.divide(previous_value) |> S.subtract(1)
-# daily_returns = [0] |> S.from_list() |> S.concat(daily_returns)
-
-# portfolio
-# |> DF.put("previous_value", S.concat(S.from_list([0]), previous_value))
-# |> DF.put("daily_returns", daily_returns)
-```
-
-<!-- livebook:{"output":true} -->
-
-```
-
-11:07:49.061 [info] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero. See more at https://github.com/torvalds/linux/blob/v6.0/Documentation/ABI/testing/sysfs-bus-pci#L344-L355
-
-11:07:49.061 [info] XLA service 0x7941f8018b90 initialized for platform CUDA (this does not guarantee that XLA will be used). Devices:
-
-11:07:49.061 [info]   StreamExecutor device (0): NVIDIA GeForce RTX 3070, Compute Capability 8.6
-
-11:07:49.061 [info] Using BFC allocator.
-
-11:07:49.061 [info] XLA backend allocating 7493419008 bytes on device 0 for BFCAllocator.
-
-11:07:49.063 [info] failed to allocate 6.98GiB (7493419008 bytes) from device: CUDA_ERROR_OUT_OF_MEMORY: out of memory
-
-11:07:49.172 [info] Loaded cuDNN version 8900
-
-11:07:49.178 [info] Using nvlink for parallel linking
-
-```
-
-<!-- livebook:{"output":true} -->
-
-```text
-#Explorer.DataFrame<
-  Polars[7 x 11]
-  date string ["2024-05-01", "2024-05-02", "2024-05-03", "2024-05-06", "2024-05-07", ...]
-  price f64 [191.860001, 191.660004, 190.509995, 192.0, 191.75, ...]
-  holding_delta s64 [-1, 0, 2, -2, 2, ...]
-  delta_cash f64 [1182.869301005, 0.0, -392.87508995, 375.97, -395.3675, ...]
-  holdings s64 [-1, -1, 1, -1, 1, ...]
-  cash f64 [1182.869301005, 1182.869301005, 789.9942110549998, 1165.9642110549999, 770.5967110549998, ...]
-  value f64 [991.0093000049999, 991.2092970049999, 980.5042060549998, 973.9642110549999, 962.3467110549998, ...]
-  norm_value f64 [1.0, 1.0002018114259867, 0.9893996010431516, 0.9828002734687615, 0.9710773764183086, ...]
-  previous_value f64 [0.0, 991.0093000049999, 991.2092970049999, 980.5042060549998, 973.9642110549999, ...]
-  daily_returns f64 [0.0, 2.0181142598674207e-4, -0.0108000308132159, -0.006670032580801677, -0.01192805635785732, ...]
-  cumulative_returns f64 [0.0, 2.0181142598674207e-4, -0.010598219387229157, -0.017268251968030834, -0.029196308325888154, ...]
->
-```
-
-```elixir
-2 * 190.51 + 789.99
-```
-
-<!-- livebook:{"output":true} -->
-
-```
-1171.01
-```
-
-```elixir
 defmodule Indicators do
   @moduledoc """
   Part of every experience tuple is the agent's state. For stock trading, the state 
@@ -1087,16 +1013,6 @@ end
 
 ```
 {:module, EnvironmentServer, <<70, 79, 82, 49, 0, 0, 58, ...>>, {:handle_call, 3}}
-```
-
-```elixir
-Enum.map(10..90//10, &to_string/1)
-```
-
-<!-- livebook:{"output":true} -->
-
-```
-["10", "20", "30", "40", "50", "60", "70", "80", "90"]
 ```
 
 ```elixir
